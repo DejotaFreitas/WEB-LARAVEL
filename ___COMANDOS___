@@ -1,0 +1,183 @@
+==============INSTALR========================
+// primeiro fazer download pelo composer
+composer global require laravel/installer
+
+==============CIAR=PROJETO=======================
+// criar projeto
+laravel new nome_projeto
+
+// tambem pode usar o composer para criar o projeto
+composer create-project --prefer-dist laravel/laravel nome_projeto
+
+// definindo versao
+composer create-project --prefer-dist laravel/laravel nome_projeto "5.8.*"
+
+
+================CRIAR=VIEW=LOGIN==LARAVEL=5.8==================
+// cria as view de login
+php artisan make:auth
+
+==============BOOTSTRAP==LARAVEL=5.8=====================
+// VA
+// EM: package.json - remover pacote vue ou react
+// use comando
+npm install
+
+// EM: \resources\js\app.js - e comente o codigo corespondente ao VUE ou REACT
+npm run dev
+
+//ADICONANDO NO SEU PROJETO HTML
+<!-- token de autenticação da pagina -->
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<!-- add bootstrap compilado -->
+<link rel="stylesheet" href="{{asset('css/app.css')}}">
+
+<!-- add javascript do bootstrap compilado -->
+<script src="{{asset('js/app.js')}}" charset="utf-8" type="text/javascript"></script>
+
+==============BOOTSTRAP=VUE=REACT=LARAVEL=6.0=====================
+// instalando andaimes com bootstrap e vue
+composer require laravel/ui --dev
+
+// Gerar andaimes básicos
+php artisan ui vue
+php artisan ui react
+//OU
+// Gerar andaimes com telas de login / registro ...
+php artisan ui vue --auth
+php artisan ui react --auth
+
+// se nao for ultilizar o VUE ou REACT
+// - remover vue ou react do package.json
+// - VA EM: \resources\js\app.js e comente o codigo corespondente ao VUE ou REACT
+// - VA EM: resources\sass\ apagar conteudo dos dois arquivos para limpar css
+
+//instalar as dependencias
+npm install
+
+// compilar dependencias para poder usar o bootstrap e vue ou react no projeto
+npm run dev
+
+// AMBOS DE UMA VEZ
+npm install && npm run dev
+
+==============RODAR=SERVER=======================
+//rodar aplicacao usando servidor interno do php instalado
+php artisan serve
+
+==============ROTAS========================
+// mostrar a lista de rotas do sitemas
+php artisan route:list
+
+==============CRIA=CONTROLER=======================
+// criar Controller
+php artisan make:controller NomeDoControler
+
+// cria controler com varios metodos prontos
+php artisan make:controller ClienteControler --resource
+php artisan make:controller ClienteControler -r
+
+=============TOKEN=IGNORE======================
+// \app\Http\Middleware\VerifyCsrfToken.php
+protected $except = [
+		// add rota que nao vai fazer verificacçao de token
+		'/api*'
+];
+
+==============MODELOS=MIGRATION=======================
+// criar a migration simples
+php artisan make:migration nome_migracao
+
+// criar a migration com campos prontos
+php artisan make:migration criar_tabela_usuario --create=usuario
+//OU
+php artisan make:migration criar_tabela_usuario --table=usuario
+
+// criar as tabelas no banco de dados
+php artisan migrate
+
+// reverter migracao
+php artisan migrate:rollback
+
+// reverter todas as migrações
+php artisan migrate:reset
+
+// reverter todas migrações e depois recriar todas tabelas
+php artisan migrate:refresh
+
+// removerá todas as tabelas e depois recria as migrações
+php artisan migrate:fresh
+
+==============SEEDER=======================
+// criar classe para inserir dados automaticamente na tabela
+php artisan make:seeder UsuarioTabelaSeeder
+
+
+// inserir dados dos seeders
+php artisan db:seed
+
+// se nao encontrar a classe seeder com comando php artisan db:seed
+//deve ser necessario recarregar o autoload no composer
+composer dump-autoload
+
+==============MODEL=======================
+// cria modelo:
+// importante começar no modelo com maiusculo "Usuario"
+// e no bando ele vai referenciar a tabela com nome no plural "Usuarios"
+php artisan make:model Usuario
+
+// cria moodelo e a migration
+php artisan make:model Usuario -m
+php artisan make:model Usuario --migration
+
+==============GERANDO=TELA=AUTENTICACAO=====================
+// usando o sistema de login automatico do laravel
+
+composer require laravel/ui --dev
+php artisan ui vue --auth
+npm install && npm run dev
+php artisan migrate:fresh
+
+// se o migration der errado add encode na tabelas
+$table->charset = 'utf8';
+$table->collation = 'utf8_unicode_ci';
+
+==============EMAIL=======================
+// criar email em: app\Mail\NomeMail.php
+php artisan make:mail NomeMail
+
+//configrando .env para eniar email
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=465
+MAIL_USERNAME=ENTER_YOUR_EMAIL_ADDRESS(GMAIL)
+MAIL_PASSWORD=ENTER_YOUR_GMAIL_PASSWORD
+MAIL_ENCRYPTION=ssl
+MAIL_FROM_ADDRESS=ENTER_YOUR_EMAIL_ADDRESS(GMAIL)
+MAIL_FROM_NAME=[TITULO_EMAIL_ENVIADO]
+
+//Aplicar configurações do .env
+php artisan cache:clear && php artisan config:clear && php artisan config:cache
+
+// DEPOIS
+- MAIL_USERNAME e PASSWORD devem ser substituídos pelo seu endereço de e-mail e senha do Gmail, respectivamente. Faça login na sua Conta do Google, acesse Configurações de segurança e ATIVE O BOTÃO DE ALTERNÂNCIA PERMITIR APLICATIVOS MENOS SEGUROS.
+
+==============UPLOAD=ARQUIVOS======================
+// deixar arquivos publicos da pasta storage para que possam ser acessado
+php artisan storage:link
+
+==============EVENT=LISTENER======================
+// ciar evento
+php artisan make:event NomeEvent
+
+// ciar listiner
+php artisan make:listener NomeEventListener
+
+// gerar arquivos de evento e litener adicionados:
+// app\Providers\EventServiceProvider.php
+// add
+'App\Events\NomeEvento' => ['App\Listeners\NomeEventoListener'],
+php artisan event:generate
+
+==============A=======================
